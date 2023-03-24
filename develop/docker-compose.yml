@@ -12,14 +12,12 @@ services:
     user: 'unit:root'
     healthcheck:
       start_period: 60s
-      timeout: 3s
+      timeout: 60s
       interval: 15s
       test: "curl -f http://localhost:8080/api/ || exit 1"
     volumes:
     - ./configuration.py:/etc/netbox/config/configuration.py:z,ro
     - netbox-media-files:/opt/netbox/netbox/media:z
-    ports:
-      - 8000:8080
   netbox-worker:
     <<: *netbox
     depends_on:
@@ -31,7 +29,7 @@ services:
     - rqworker
     healthcheck:
       start_period: 20s
-      timeout: 3s
+      timeout: 30s
       interval: 15s
       test: "ps -aux | grep -v grep | grep -q rqworker || exit 1"
 
