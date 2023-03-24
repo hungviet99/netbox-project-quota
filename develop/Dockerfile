@@ -26,6 +26,9 @@ RUN pip install django-rq==2.3.2
 WORKDIR /source
 COPY --chown=netbox:netbox . /source
 
+
+# RUN chmod +x ./develop/setup-plugins.sh
+
 RUN ./develop/setup-plugins.sh
 
 WORKDIR /opt/netbox/netbox/
