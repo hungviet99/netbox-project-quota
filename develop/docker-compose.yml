@@ -18,6 +18,8 @@ services:
     volumes:
     - ./configuration.py:/etc/netbox/config/configuration.py:z,ro
     - netbox-media-files:/opt/netbox/netbox/media:z
+    ports:
+      - '8000:8080'
   netbox-worker:
     <<: *netbox
     depends_on:
