@@ -11,7 +11,17 @@ services:
     env_file: env/netbox.env
     user: 'unit:root'
     environment:
-      - SUPERUSER_PASSWORD=mysecretpassword
+    environment:
+      - SUPERUSER_NAME=admin
+      - SUPERUSER_EMAIL=admin@example.com
+      - SUPERUSER_PASSWORD=admin
+    command:
+      - /bin/bash
+      - -c
+      - |
+        /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py migrate --noinput &&
+        /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py collectstatic --no-input &&
+        /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py createsuperuser --noinput --username admin --email admin@example.com
     healthcheck:
       start_period: 120s
       timeout: 120s
