@@ -1,5 +1,10 @@
 FROM netboxcommunity/netbox:v3.4.6
 
+RUN export DEBIAN_FRONTEND=noninteractive \
+    && apt-get update -qq \ 
+    && apt-get upgrade --yes -qq --no-install-recommends \
+    && apt-get install git -y
+
 COPY ./develop/plugin_requirements.txt /
 RUN /opt/netbox/venv/bin/pip install  --no-warn-script-location -r /plugin_requirements.txt
 
