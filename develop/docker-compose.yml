@@ -10,6 +10,8 @@ services:
     - redis-cache
     env_file: env/netbox.env
     user: 'unit:root'
+    environment:
+      - SUPERUSER_PASSWORD=mysecretpassword
     healthcheck:
       start_period: 120s
       timeout: 120s
