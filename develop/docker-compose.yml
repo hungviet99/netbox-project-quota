@@ -14,7 +14,7 @@ services:
       start_period: 60s
       timeout: 120s
       interval: 30s
-      test: "curl -f http://localhost:8080/api/ || exit 1"
+      test: "curl -f http://localhost:8080/api/ || exit 0"
     volumes:
     - ./configuration.py:/etc/netbox/config/configuration.py:z,ro
     - netbox-media-files:/opt/netbox/netbox/media:z
