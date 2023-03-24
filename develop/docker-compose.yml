@@ -10,10 +10,6 @@ services:
     - redis-cache
     env_file: env/netbox.env
     user: 'unit:root'
-    environment:
-      - SUPERUSER_NAME=admin
-      - SUPERUSER_EMAIL=admin@example.com
-      - SUPERUSER_PASSWORD=admin
     command:
       - /bin/bash
       - -c
