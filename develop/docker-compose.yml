@@ -12,8 +12,8 @@ services:
     user: 'unit:root'
     healthcheck:
       start_period: 60s
-      timeout: 60s
-      interval: 15s
+      timeout: 120s
+      interval: 30s
       test: "curl -f http://localhost:8080/api/ || exit 1"
     volumes:
     - ./configuration.py:/etc/netbox/config/configuration.py:z,ro
