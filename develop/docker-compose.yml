@@ -11,7 +11,7 @@ services:
     env_file: env/netbox.env
     user: 'unit:root'
     healthcheck:
-      start_period: 60s
+      start_period: 120s
       timeout: 120s
       interval: 30s
       test: "curl -f http://localhost:8080/api/ || exit 0"
@@ -34,6 +34,8 @@ services:
       timeout: 30s
       interval: 15s
       test: "ps -aux | grep -v grep | grep -q rqworker || exit 1"
+    ports:
+      - '8001:8080'
 
   # postgres
   postgres:
