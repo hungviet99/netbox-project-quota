@@ -10,13 +10,6 @@ services:
     - redis-cache
     env_file: env/netbox.env
     user: 'unit:root'
-    command:
-      - /bin/bash
-      - -c
-      - |
-        /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py migrate --noinput &&
-        /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py collectstatic --no-input &&
-        /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py createsuperuser --noinput --username admin --email admin@example.com
     healthcheck:
       start_period: 120s
       timeout: 120s
