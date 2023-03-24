@@ -1,30 +1,8 @@
-ARG python_ver=3.10
-FROM python:${python_ver}
+FROM netboxcommunity/netbox:v3.4.6
 
-ARG netbox_ver=v3.4.6
-ENV PYTHONUNBUFFERED 1
+COPY ./plugin_requirements.txt /
+RUN /opt/netbox/venv/bin/pip install  --no-warn-script-location -r /plugin_requirements.txt
 
-RUN pip install --upgrade pip
-
-RUN groupadd -g 1000 netbox && useradd -m -u 1000 -g netbox netbox
-RUN mkdir -p /opt/netbox /source && chown netbox:netbox /opt/netbox /source
-USER netbox
-
-# -------------------------------------------------------------------------------------
-# Install NetBox
-# -------------------------------------------------------------------------------------
-RUN git clone --single-branch --branch ${netbox_ver} https://github.com/netbox-community/netbox.git /opt/netbox/ \
-    && cd /opt/netbox/ && pip install -r requirements.txt
-
-# Work around https://github.com/rq/django-rq/issues/421
-RUN pip install django-rq==2.3.2
-
-# -------------------------------------------------------------------------------------
-# Install Netbox Plugins
-# -------------------------------------------------------------------------------------
-WORKDIR /source
-COPY --chown=netbox:netbox . /source
-
-RUN ./develop/setup-plugins.sh
-
-WORKDIR /opt/netbox/netbox/
+# These lines are only required if your plugin has its own static files.
+COPY configuration.py /etc/netbox/config/configuration.py
+RUN SECRET_KEY="dummy" /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py collectstatic --no-input
